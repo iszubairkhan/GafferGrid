@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Manage & Edit Schedules | GafferGrid</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="editor_page">
+    <div class="app-layout">
+        <!-- Top Nav -->
+        <nav class="nav-bar">
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <img src="profile.jpg" alt="Profile" class="brand-avatar" onerror="this.style.display='none'">
+                </div>
+                <div class="brand-title">GafferGrid Studio</div>
+            </div>
+
+            <div class="nav-right-actions">
+                <a href="index.html" class="db-btn" style="text-decoration:none; padding:8px 16px;">← Back to Dashboard</a>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="hero-header">
+            <div class="hero-left">
+                <div class="live-badge" style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border-color: rgba(99, 102, 241, 0.3);">
+                    Schedule Customizer
+                </div>
+                <h1>Manage & Update Timetables</h1>
+                <p>Modify task timings, edit titles, add new customized slots, or remove existing tasks.</p>
+            </div>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="editor-controls-bar">
+            <div class="editor-selector-wrap">
+                <label class="form-label" style="font-size:0.88rem; font-weight:700;">Select Routine to Edit:</label>
+                <select class="form-select" id="editorRoutineSelect" style="min-width: 220px;">
+                    <option value="weekdays_routine">Weekdays Routine (Mon – Fri)</option>
+                    <option value="offday_routine">Off-Day Accelerator (Tue / Thu)</option>
+                    <option value="weekends_routine">Weekends Matchday (Sat – Sun)</option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="db-btn" id="addNewTaskBtn" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: #10b981;">+ Add New Task</button>
+                <button class="db-btn" id="resetDefaultScheduleBtn">Reset to Default</button>
+                <button class="edit-schedule-btn" id="saveScheduleChangesBtn">💾 Save All Changes</button>
+            </div>
+        </div>
+
+        <!-- Task Editor Items Container -->
+        <main class="editor-tasks-list" id="editorTasksList">
+            <!-- Injected via ScheduleEditor -->
+        </main>
+
+        <footer class="app-footer">
+            Changes saved here are instantly reflected across your active daily routines.
+        </footer>
+    </div>
+
+    <script src="js/engine.js"></script>
+</body>
+</html>
