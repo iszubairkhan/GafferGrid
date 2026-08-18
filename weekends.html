@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Weekend Deep-Load & Matchday | GafferGrid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="weekends_routine">
+    <!-- Background Particles Canvas (Fire / Snowfall) -->
+    <canvas id="themeEffectCanvas"></canvas>
+
+    <div class="app-layout">
+        <!-- Top Nav with Avatar & Direct Editor Link Button -->
+        <nav class="nav-bar">
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <img src="profile.jpg" alt="Profile" class="brand-avatar" onerror="this.style.display='none'">
+                </div>
+                <div class="brand-title">GafferGrid</div>
+            </div>
+
+            <!-- Top Right Action Hub -->
+            <div class="nav-right-actions">
+                <a href="edit.html" class="edit-schedule-btn" title="Manage, Add, or Delete Timetable Tasks">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Changes Needed? Edit Now
+                </a>
+                <div class="auto-locked-badge">
+                    <span class="dot"></span>
+                    <span id="activeModeBadge">Auto-Configured Schedule</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Josh & Date Status Bar -->
+        <div class="josh-status-bar">
+            <div class="josh-info">
+                <span>Josh: <span class="josh-badge" id="currentJoshBadge">HIGH SIR 🔥</span></span>
+                <span>Active Date: <strong class="date-pill" id="currentDayDisplay">Monday</strong> (<span id="currentDateDisplay">2026-08-18</span>)</span>
+            </div>
+            <button class="recheck-btn" id="recheckBtn">Change Date / Josh ⚡</button>
+        </div>
+
+        <!-- Header -->
+        <div class="hero-header">
+            <div class="hero-left">
+                <div class="live-badge">
+                    <span class="pulse-dot"></span>
+                    <span>15-Week Runway Active</span>
+                </div>
+                <h1>Weekend Deep-Load & Matchday</h1>
+                <p>Heavy Morning Sprints (5.5h) • Fixed 2:30 PM Lunch • 100% Guilt-Free Football Evenings</p>
+            </div>
+        </div>
+
+        <!-- Dashboard Control Hub -->
+        <div class="control-hub">
+            <div class="hub-card">
+                <div class="progress-header">
+                    <span class="progress-title">Daily Execution Completion</span>
+                    <span class="progress-number" id="progressNumber">0/0 (0%)</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="status-msg" id="statusMsg"></div>
+            </div>
+
+            <div class="hub-card">
+                <div class="progress-title">Daily Database Logs & Review</div>
+                <div class="db-actions">
+    <button class="db-btn" id="exportDbBtn" title="Download database JSON file">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save to File
+    </button>
+    <button class="db-btn" id="weeklyReportBtn" title="View 7-day review summary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 
+        Weekly Report
+    </button>
+    <button class="db-btn" id="monthlyReportBtn" title="View 30-day review summary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 
+        Monthly Report
+    </button>
+    <button class="db-btn" id="viewLogsBtn" title="View historical saved dates">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        History Logs
+    </button>
+    <button class="db-btn" id="importDbBtn" title="Load database JSON file">Load File</button>
+    <button class="db-btn danger" id="resetBtn">Reset</button>
+    <input type="file" id="dbFileInput" accept=".json" style="display: none;">
+</div>
+            </div>
+        </div>
+
+        <!-- Dynamic Timeline Grid (Populated directly from Storage/Engine) -->
+        <main class="timeline-grid">
+            <!-- Injected via RoutineEngine.renderDynamicTasks() -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            GafferGrid • Auto-Configured Schedule • Date-Tagged Local Database
+        </footer>
+    </div>
+
+    <!-- 1. "HOW'S THE JOSH?" CHECK-IN MODAL WITH LEAVE TOGGLE -->
+    <div class="modal-overlay" id="joshModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">🔥 Daily Check-In</div>
+            </div>
+            <form id="joshForm">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label">How's the Josh today?</label>
+                    <div class="josh-options">
+                        <div class="josh-btn-option selected" data-value="HIGH SIR 🔥">HIGH SIR 🔥</div>
+                        <div class="josh-btn-option" data-value="MODERATE ⚡">MODERATE ⚡</div>
+                        <div class="josh-btn-option" data-value="NEED FOCUS 🛡️">NEED FOCUS 🛡️</div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label">Select Day</label>
+                    <select class="form-select" id="modalDaySelect">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                </div>
+
+                <!-- Dynamic Leave Selector for Tuesday / Thursday -->
+                <div class="form-group" id="leaveSelectGroup" style="display: none; margin-bottom: 12px;">
+                    <label class="form-label" style="color: var(--accent-amber);">Are you taking leave from college today?</label>
+                    <select class="form-select" id="modalLeaveSelect">
+                        <option value="leave">Yes, Taking Leave (Off-Day Schedule)</option>
+                        <option value="college">No, Going to College (Weekday Schedule)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label">Today's Date</label>
+                    <input type="date" class="form-input" id="modalDateInput" required>
+                </div>
+
+                <button type="submit" class="submit-btn" style="width: 100%;">Let's Crush It →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. HISTORY LOGS MODAL -->
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-box" style="max-width: 520px;">
+            <div class="modal-header">
+                <div class="modal-title">📅 Saved Daily Database Logs</div>
+                <button id="closeHistoryBtn" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer;">✕</button>
+            </div>
+            <div class="history-list" id="historyLogsContainer"></div>
+            <button class="db-btn" onclick="document.getElementById('exportDbBtn').click()" style="width: 100%; margin-top: 6px;">Download Complete JSON Log</button>
+        </div>
+    </div>
+
+    <!-- 3. WEEKLY READABLE SUMMARY MODAL -->
+    <div class="modal-overlay" id="weeklyModal">
+        <div class="modal-box" style="max-width: 600px;">
+            <div class="modal-header">
+                <div class="modal-title">📊 Weekly Performance Summary</div>
+                <button id="closeWeeklyBtn" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer;">✕</button>
+            </div>
+            
+            <div class="weekly-summary-grid">
+                <div class="weekly-stat-card">
+                    <div class="weekly-stat-lbl">Tracked Days</div>
+                    <div class="weekly-stat-val" id="statTotalDays">0 Days</div>
+                </div>
+                <div class="weekly-stat-card">
+                    <div class="weekly-stat-lbl">Tasks Crushed</div>
+                    <div class="weekly-stat-val" id="statTotalCompletion">0 Tasks</div>
+                </div>
+                <div class="weekly-stat-card">
+                    <div class="weekly-stat-lbl">Weekly Score</div>
+                    <div class="weekly-stat-val" id="statAvgScore">0%</div>
+                </div>
+            </div>
+
+            <div class="readable-report-box" id="readableReportText">Loading summary...</div>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px;">
+                <button class="copy-btn" id="copyReportBtn" style="flex: 1;">📋 Copy Formatted Summary</button>
+                <button class="db-btn" onclick="document.getElementById('closeWeeklyBtn').click()" style="flex: 1;">Close</button>
+            </div>
+        </div>
+    </div>
+
+<!-- 4. MONTHLY PERFORMANCE SUMMARY MODAL -->
+<div class="modal-overlay" id="monthlyModal">
+    <div class="modal-box" style="max-width: 600px;">
+        <div class="modal-header">
+            <div class="modal-title">🗓️ Monthly Performance Report (30 Days)</div>
+            <button id="closeMonthlyBtn" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer;">✕</button>
+        </div>
+        
+        <div class="weekly-summary-grid">
+            <div class="weekly-stat-card">
+                <div class="weekly-stat-lbl">Active Days</div>
+                <div class="weekly-stat-val" id="statMonthlyDays">0 Days</div>
+            </div>
+            <div class="weekly-stat-card">
+                <div class="weekly-stat-lbl">Tasks Crushed</div>
+                <div class="weekly-stat-val" id="statMonthlyCompletion">0 Tasks</div>
+            </div>
+            <div class="weekly-stat-card">
+                <div class="weekly-stat-lbl">Monthly Average</div>
+                <div class="weekly-stat-val" id="statMonthlyAvgScore">0%</div>
+            </div>
+        </div>
+
+        <div class="readable-report-box" id="readableMonthlyReportText">Loading monthly summary...</div>
+
+        <!-- Monthly Report Action Buttons -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+            <button class="copy-btn" id="copyMonthlyReportBtn" style="flex: 1; min-width: 120px;">📋 Copy Text</button>
+            <button class="db-btn" id="savePdfMonthlyBtn" style="flex: 1; min-width: 100px;">📄 Save PDF</button>
+            <button class="db-btn" id="saveDocxMonthlyBtn" style="flex: 1; min-width: 100px;">📝 Save DOCX</button>
+            <button class="db-btn" id="savePhotoMonthlyBtn" style="flex: 1; min-width: 100px;">🖼️ Save Photo</button>
+            <button class="db-btn danger" id="resetMonthlyReportBtn" style="flex: 1; min-width: 100px;">🗑️ Reset Logs</button>
+        </div>
+    </div>
+</div>
+
+    <script src="engine.js"></script>
+</body>
+</html>
