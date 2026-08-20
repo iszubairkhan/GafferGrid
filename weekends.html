@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Weekend Deep-Load & Matchday | GafferGrid</title>
+    <title>Weekend Deep-Load & Matchday | GrifferGrid</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="weekends_routine">
@@ -166,35 +166,39 @@
 
     <!-- 3. WEEKLY READABLE SUMMARY MODAL -->
     <div class="modal-overlay" id="weeklyModal">
-        <div class="modal-box" style="max-width: 600px;">
-            <div class="modal-header">
-                <div class="modal-title">📊 Weekly Performance Summary</div>
-                <button id="closeWeeklyBtn" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer;">✕</button>
+    <div class="modal-box" style="max-width: 600px;">
+        <div class="modal-header">
+            <div class="modal-title">📊 Weekly Performance Summary</div>
+            <button id="closeWeeklyBtn" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer;">✕</button>
+        </div>
+        
+        <div class="weekly-summary-grid">
+            <div class="weekly-stat-card">
+                <div class="weekly-stat-lbl">Tracked Days</div>
+                <div class="weekly-stat-val" id="statTotalDays">0 Days</div>
             </div>
-            
-            <div class="weekly-summary-grid">
-                <div class="weekly-stat-card">
-                    <div class="weekly-stat-lbl">Tracked Days</div>
-                    <div class="weekly-stat-val" id="statTotalDays">0 Days</div>
-                </div>
-                <div class="weekly-stat-card">
-                    <div class="weekly-stat-lbl">Tasks Crushed</div>
-                    <div class="weekly-stat-val" id="statTotalCompletion">0 Tasks</div>
-                </div>
-                <div class="weekly-stat-card">
-                    <div class="weekly-stat-lbl">Weekly Score</div>
-                    <div class="weekly-stat-val" id="statAvgScore">0%</div>
-                </div>
+            <div class="weekly-stat-card">
+                <div class="weekly-stat-lbl">Tasks Crushed</div>
+                <div class="weekly-stat-val" id="statTotalCompletion">0 Tasks</div>
             </div>
-
-            <div class="readable-report-box" id="readableReportText">Loading summary...</div>
-
-            <div style="display: flex; gap: 8px; margin-top: 10px;">
-                <button class="copy-btn" id="copyReportBtn" style="flex: 1;">📋 Copy Formatted Summary</button>
-                <button class="db-btn" onclick="document.getElementById('closeWeeklyBtn').click()" style="flex: 1;">Close</button>
+            <div class="weekly-stat-card">
+                <div class="weekly-stat-lbl">Weekly Score</div>
+                <div class="weekly-stat-val" id="statAvgScore">0%</div>
             </div>
         </div>
+
+        <div class="readable-report-box" id="readableReportText">Loading summary...</div>
+
+        <!-- Weekly Report Action Buttons -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+            <button class="copy-btn" id="copyReportBtn" style="flex: 1; min-width: 120px;">📋 Copy Text</button>
+            <button class="db-btn" id="savePdfReportBtn" style="flex: 1; min-width: 100px;">📄 Save PDF</button>
+            <button class="db-btn" id="saveDocxReportBtn" style="flex: 1; min-width: 100px;">📝 Save DOCX</button>
+            <button class="db-btn" id="savePhotoReportBtn" style="flex: 1; min-width: 100px;">🖼️ Save Photo</button>
+            <button class="db-btn danger" id="resetWeeklyReportBtn" style="flex: 1; min-width: 100px;">🗑️ Reset Logs</button>
+        </div>
     </div>
+</div>
 
 <!-- 4. MONTHLY PERFORMANCE SUMMARY MODAL -->
 <div class="modal-overlay" id="monthlyModal">
