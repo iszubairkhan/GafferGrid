@@ -34,23 +34,25 @@
         </div>
 
         <!-- Controls Bar -->
-        <div class="editor-controls-bar">
-            <div class="editor-selector-wrap">
-                <label class="form-label" style="font-size:0.88rem; font-weight:700;">Select Routine to Edit:</label>
-                <select class="form-select" id="editorRoutineSelect" style="min-width: 220px;">
-                    <option value="weekdays_routine">Weekdays Routine (Mon – Fri)</option>
-                    <option value="offday_routine">Off-Day Accelerator (Tue / Thu)</option>
-                    <option value="weekends_routine">Weekends Matchday (Sat – Sun)</option>
-                </select>
-            </div>
 
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <button class="db-btn" id="addNewTaskBtn" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: #10b981;">+ Add New Task</button>
-                <button class="db-btn" id="resetDefaultScheduleBtn">Reset to Default</button>
-                <button class="edit-schedule-btn" id="saveScheduleChangesBtn">💾 Save All Changes</button>
-            </div>
-        </div>
+<div class="editor-controls-bar">
+    <div class="editor-selector-wrap">
+        <label class="form-label" style="font-size:0.88rem; font-weight:700;">Select Routine to Edit:</label>
+        <select class="form-select" id="editorRoutineSelect" style="min-width: 220px;">
+            <option value="weekdays_routine">Weekdays Routine (Mon – Fri)</option>
+            <option value="offday_routine">Off-Day Accelerator (Tue / Thu)</option>
+            <option value="weekends_routine">Weekends Matchday (Sat – Sun)</option>
+        </select>
+    </div>
 
+    <!-- Quick Profile & Preset Buttons -->
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="db-btn" id="addNewTaskBtn" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: #10b981;">+ Add New Task</button>
+        <button class="db-btn" id="loadPersonalPresetBtn" title="Load Zubair's Cybersecurity/Web Dev/DU Routine">⚡ Load Creator Preset</button>
+        <button class="db-btn" id="resetDefaultScheduleBtn">🔄 Reset to General Default</button>
+        <button class="edit-schedule-btn" id="saveScheduleChangesBtn">💾 Save All Changes</button>
+    </div>
+</div>
         <!-- Task Editor Items Container -->
         <main class="editor-tasks-list" id="editorTasksList">
             <!-- Injected via ScheduleEditor -->
@@ -58,6 +60,10 @@
 
         <footer class="app-footer">
             Changes saved here are instantly reflected across your active daily routines.
+        </footer>
+
+        <footer class="app-footer" style="font-size:0.75rem; color:#6b7280; text-align:center; margin-top:16px;">
+            🌏︎ ZUBAIR KHAN
         </footer>
     </div>
 
